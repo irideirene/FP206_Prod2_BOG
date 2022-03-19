@@ -15,8 +15,6 @@ public class Product {
     private ArrayList<Order> orders;
 
 
-
-
     // CONSTRUCTOR
     public Product(String productID, String productName, Text description, double price, double shippingFee, int handlingTime) {
         this.productID = productID;
@@ -27,14 +25,6 @@ public class Product {
         this.handlingTime = handlingTime;
         this.orders = new ArrayList<Order>();
     }
-
-
-   
-
-
-
-
-
 
 
        // GETTERS & SETTERS
@@ -121,13 +111,5 @@ public class Product {
         this.orders = orders;
     }
 
-
-    
-
-    
-
-
-    
-    
 }
 

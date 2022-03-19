@@ -10,33 +10,62 @@ public abstract class Customer {
     protected String idCardNumbber;
     protected static CustomerType type;
     protected ArrayList<Order> orders;
+
+    protected double customerFee;
+    protected int customerDiscount;
     
 
 
     // CONSTRUCTOR
-    public Customer(String firstname, String lastname, String email, String address, String idCardNumbber, CustomerType type) {
+    public Customer(String firstname, String lastname, String email, String address, String idCardNumbber, CustomerType type, double customerFee, int customerDiscount) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.address = address;
         this.idCardNumbber = idCardNumbber;
         orders = new ArrayList<Order>();
+        
+        this.customerFee = customerFee;
+        this.customerDiscount = customerDiscount; 
     }
 
 
     // CUSTOMER TYPE CHECK
+    public abstract CustomerType getCustomerType();
+    public abstract double calcAnual();
+    public abstract float shippingDiscuount();
 //********************************************************************************************************* */
  /*  Según demanda del producto faltarían los métodos:
 
-        public abstract Strig getCustomerType()
-        public abstract float calcAnual()
-        public abstract float shippingDiscuount()
+        
+        
+        
 
  */
 
     // SETTERS & GETTERS
     public String getFirstname() {
         return firstname;
+    }
+
+
+    public double getCustomerFee() {
+        return customerFee;
+    }
+
+
+    public void setCustomerFee(double customerFee) {
+        this.customerFee = customerFee;
+    }
+
+
+    public int getCustomerDiscount() {
+        return customerDiscount;
+    }
+
+
+    public void setCustomerDiscount(int customerDiscount) {
+        this.customerDiscount = customerDiscount;
     }
 
 
@@ -85,15 +114,11 @@ public abstract class Customer {
     }
 
 
-    
-
-    
-    
-
-    //Joan
-    
-
-
+    @Override
+    public String toString() {
+        return "Order [firstName=" + firstname + ", lastName=" + lastname + ", email=" + email + ", addres="
+                + address + ", idCardNumber=" + idCardNumbber + ", CustomerType=" + type.toString() + "]";
+    }
     
 }
 

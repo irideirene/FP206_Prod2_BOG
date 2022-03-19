@@ -1,6 +1,7 @@
 package bog_modelo;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Order {
     private String orderID;
@@ -11,9 +12,7 @@ public class Order {
     private double shipingFee;
     private LocalDateTime creationDataTime;
     private int handlingTime;
-
-
-
+    private boolean isSent;
 
     // CONSTRUCTOR
     public Order(String orderID, Product product, Customer customer, int product_qty, double subtotal, double shipingFee,
@@ -31,12 +30,8 @@ public class Order {
     // CHECKERS - Comprueban las políticas de negocio y calculan resultados
 
     public boolean isCancellable(){
-        
-        /*if (LocalTime.now() > this.creationDataTime + handlingTime * 60){
 
-        }*/
-
-        return false;
+        return !isSent; //Si esta enviado, no se puede cancelar. Así de simple
 
     }
 
@@ -48,21 +43,33 @@ public class Order {
     public double calculateShipping(){
         double ret;
         ret = this.shipingFee;
+
         return ret;
     }
 
     public double calculateOrderTotal(){
         double orderTotal;
-
-        orderTotal = product_qty * this.product.getPrice() ;
+        //El total del pedido es el precio del pedido segun las veces que se haya pedido + los gastos de envio, aplicando el descuento (puede ser descuento = 0)
+        orderTotal = product_qty * this.product.getPrice() + (shipingFee -((shipingFee * customer.getCustomerDiscount())/100)) ;
 
         return orderTotal;
 
     }
+    public boolean orderSent(){
+        //Primero convertimos el handlingTime a LocalDateTime. NO SE COMOOO
+        //LocalDateTime 
+        if(LocalDateTime.now().compareTo(creationDataTime ) > 0){
+            isSent = true;
+        }
+        else{
+            isSent = false;
+        }
+        return isSent;
+    }
 //************************************************************************************
  /*
  Según demanda del producto faltarían los métodos:
-        public boolean orderSent()
+        
 
  */
 
@@ -181,13 +188,16 @@ public class Order {
         this.handlingTime = handlingTime;
     }
 
+    public boolean getIsSended() {
+        return isSent;
+    }
 
 
     @Override
     public String toString() {
         return "Order [creationDataTime=" + creationDataTime + ", customer=" + customer + ", handlingTime=" + handlingTime + ", product="
                 + product + ", product_qty=" + product_qty + ", shipingFee=" + shipingFee + ", orderID=" + orderID
-                + ", subtotal=" + subtotal + "]";
+                + ", subtotal=" + subtotal + ", sended= " + isSent + "]";
     }
 
 
